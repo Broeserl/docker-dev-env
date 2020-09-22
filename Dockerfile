@@ -13,7 +13,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update --fix-missing
 
 # Install standard tools
-RUN apt -y install build-essential ssh wget git python3.8 screen vim gdb gcc g++ cmake
+RUN apt -y install build-essential rsync ssh wget git python3.8 screen vim gdb gcc g++ cmake
 
 # Install dependencies
 #RUN apt -y install 
