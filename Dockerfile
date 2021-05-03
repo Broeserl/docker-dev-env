@@ -10,21 +10,16 @@ LABEL description="This is a blank dev container with ubuntu 20.04"
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Update Ubuntu Software repository
-RUN apt update --fix-missing
+RUN apt update --fix-missing && apt -y upgrade
 
 # Install standard tools
 RUN apt -y install build-essential rsync ssh wget git python3.8 screen vim gdb gcc g++ cmake
 
-# Install dependencies
-#RUN apt -y install 
+# Install googletest
+RUN apt -y install libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp ./lib/libgtest*.a /usr/lib
 
-# Copy config files
-COPY config/.vimrc /root/.vimrc
-COPY config/.screenrc /root/.screenrc
-COPY config/.aliases /root/.aliases
-COPY config/.jo_config /root/.jo_config
-COPY config/.gitconfig /root/.gitconfig
-RUN echo "source /root/.jo_config" >> /root/.bashrc
+# Install ohmyzsh + dotfiles
+RUN git clone -b docker https://github.com/Broeserl/dotfiles.git && cd dotfiles && ./setup.sh
 
 # Setup ssh
 RUN ( \
@@ -36,7 +31,9 @@ RUN ( \
   && mkdir /run/sshd
 
 # Add user to make it accessable via SSH
-#RUN useradd -m user && yes password | passwd user && adduser user sudo
-RUN echo 'root:password' | chpasswd
+RUN echo 'root:root' | chpasswd
 
 CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
+
+# Install dependencies
+#RUN apt -y install 
