@@ -1,0 +1,7 @@
+version: "0.1"
+services:
+  dev-image:
+    container_name: dev-env
+    build: .
+    ports:
+      - "2222:22"
