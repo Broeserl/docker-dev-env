@@ -22,6 +22,7 @@ RUN apt -y install libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && 
 
 # Install ohmyzsh + dotfiles
 RUN git clone -b docker https://github.com/Broeserl/dotfiles.git; sh /dotfiles/setup.sh
+RUN ln -sf /dotfiles/config-files/.zshrc /root/.zshrc
 
 # Setup ssh
 RUN ( \
