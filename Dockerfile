@@ -10,16 +10,18 @@ LABEL description="This is a blank dev container with ubuntu 20.04"
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Update Ubuntu Software repository
-RUN apt update --fix-missing && apt -y upgrade
+RUN apt update
+RUN apt update --fix-missing
+RUN apt -y upgrade
 
 # Install standard tools
-RUN apt -y install build-essential rsync ssh wget git python3.8 screen vim gdb gcc g++ cmake
+RUN apt -y install build-essential rsync ssh wget git python3.8 screen vim gdb gcc g++ cmake apt-utils
 
 # Install googletest
 RUN apt -y install libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp ./lib/libgtest*.a /usr/lib
 
 # Install ohmyzsh + dotfiles
-RUN git clone -b docker https://github.com/Broeserl/dotfiles.git && cd dotfiles && ./setup.sh
+RUN git clone -b docker https://github.com/Broeserl/dotfiles.git; sh /dotfiles/setup.sh
 
 # Setup ssh
 RUN ( \
