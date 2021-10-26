@@ -15,7 +15,7 @@ RUN apt update --fix-missing
 RUN apt -y upgrade
 
 # Install standard tools
-RUN apt -y install build-essential rsync ssh wget git python3.8 screen vim gdb gcc g++ cmake apt-utils
+RUN apt -y install build-essential rsync ssh wget git python3.8 screen vim gdb gcc g++ cmake apt-utils ranger tree 
 
 # Install googletest
 RUN apt -y install libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make && cp ./lib/libgtest*.a /usr/lib
